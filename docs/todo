@@ -1,0 +1,2 @@
+- cases to handle:
+  - unrequired multiple spaces before align char (var a   = 1;)
