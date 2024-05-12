@@ -12,7 +12,7 @@ local function visual_selection_range()
 end
 
 
-local function align(searchChar, start, lines, pre)
+function M._align(searchChar, start, lines, pre)
   if pre == nil then
     pre = true
   end
@@ -53,34 +53,14 @@ local function align(searchChar, start, lines, pre)
   return cache
 end
 
-local test1 = {
-  "local a = 1",
-  "local abc = 1",
-  "local abcd = 1",
-  "local abcde = 1",
-}
-
-local test2 = {
-  "local function()"
-}
-
-local test3 = {
-  'fn("helo", 1)',
-  'fn("This is a long text", 2)',
-  'fn("Debug mode on", 3)',
-}
-
--- PrintTable(align("=", 1, test1))
--- PrintTable(align("=", 1, test2))
--- PrintTable(align(",", 1, test3, false))
-
 
 function M.setup(opts)
   opts = opts or {}
+  P(opts)
   vim.keymap.set("v", "<leader>h", function()
     local  startRow, _, endRow, _= visual_selection_range()
     local lines = vim.api.nvim_buf_get_lines(0, startRow, endRow, false)
-    local alignedLines = align("=", 1, lines)
+    local alignedLines = M._align("=", 1, lines)
     vim.api.nvim_buf_set_lines(0, startRow, endRow, false, alignedLines)
   end)
 end
